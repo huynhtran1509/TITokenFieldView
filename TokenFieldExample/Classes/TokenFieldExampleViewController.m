@@ -59,12 +59,18 @@
 
 - (void)showContactsPicker {
 	
-	// Show some kind of contacts picker in here.
-	// For now, it's a good chance to show how to add tokens.
-	[tokenFieldView.tokenField addToken:@"New Name"];
+	ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
+  picker.peoplePickerDelegate = self;
+	// Display only a person's phone, email, and birthdate
+	NSArray *displayedItems = [NSArray arrayWithObjects:[NSNumber numberWithInt:kABPersonPhoneProperty], 
+                             [NSNumber numberWithInt:kABPersonEmailProperty],
+                             nil];
 	
-	// You can access token titles with 'tokenFieldView.tokenTitles'.
-	// Eg, NSLog(@"%@", tokenFieldView.tokenTitles);
+	
+	picker.displayedProperties = displayedItems;
+	// Show the picker 
+	[self presentModalViewController:picker animated:YES];
+  
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
@@ -116,6 +122,50 @@
 	[tokenFieldView.contentView setFrame:newFrame];
 	[textView setFrame:newTextFrame];
 	[tokenFieldView updateContentSize];
+}
+
+
+#pragma mark - Token
+- (BOOL)personViewController:(ABPersonViewController *)personViewController shouldPerformDefaultActionForPerson:(ABRecordRef)person 
+                    property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifierForValue
+{
+	return NO;
+}
+
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
+{
+	return YES;
+}
+
+
+// Does not allow users to perform default actions such as dialing a phone number, when they select a person property.
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person 
+                                property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
+{
+  ABMultiValueRef emails = (ABMultiValueRef) ABRecordCopyValue(person, kABPersonEmailProperty);
+  NSString *emailID;
+  
+  if(ABMultiValueGetCount(emails)>0)
+  {
+    CFTypeRef prop = ABRecordCopyValue(person, property);
+    CFIndex index = ABMultiValueGetIndexForIdentifier(prop,  identifier);
+    emailID = (__bridge_transfer NSString *)ABMultiValueCopyValueAtIndex(emails, index);
+    
+    for (NSString* email in tokenFieldView.tokenTitles) {
+      [tokenFieldView.tokenField addToken:email];
+    }
+    
+    [tokenFieldView.tokenField addToken:emailID];
+    CFRelease(prop);
+    [self dismissModalViewControllerAnimated:YES];
+    
+  }
+  else
+  {
+    CFRelease(emails);
+    //Contact don't have email
+  }
+	return NO;
 }
 
 @end

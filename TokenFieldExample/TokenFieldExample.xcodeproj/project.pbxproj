@@ -13,6 +13,8 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		28D7ACF80DDB3853001CB0EB /* TokenFieldExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* TokenFieldExampleViewController.m */; };
+		65DE3F6A151C71F100E2240F /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DE3F68151C71F100E2240F /* AddressBook.framework */; };
+		65DE3F6B151C71F100E2240F /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65DE3F69151C71F100E2240F /* AddressBookUI.framework */; };
 		E28950A215135A4E000FB56F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E28950A115135A4E000FB56F /* QuartzCore.framework */; };
 		E2EC196012F4AA7A00BB0A8B /* Names.m in Sources */ = {isa = PBXBuildFile; fileRef = E2EC195D12F4AA7A00BB0A8B /* Names.m */; };
 		E2EC196112F4AA7A00BB0A8B /* TITokenFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2EC195F12F4AA7A00BB0A8B /* TITokenFieldView.m */; };
@@ -29,6 +31,8 @@
 		28D7ACF70DDB3853001CB0EB /* TokenFieldExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenFieldExampleViewController.m; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* TokenFieldExample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenFieldExample_Prefix.pch; sourceTree = "<group>"; };
+		65DE3F68151C71F100E2240F /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		65DE3F69151C71F100E2240F /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* TokenFieldExample-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TokenFieldExample-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		E28950A115135A4E000FB56F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E2EC195C12F4AA7A00BB0A8B /* Names.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Names.h; path = ../Names.h; sourceTree = SOURCE_ROOT; };
@@ -42,6 +46,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65DE3F6A151C71F100E2240F /* AddressBook.framework in Frameworks */,
+				65DE3F6B151C71F100E2240F /* AddressBookUI.framework in Frameworks */,
 				E28950A215135A4E000FB56F /* QuartzCore.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -75,6 +81,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				65DE3F68151C71F100E2240F /* AddressBook.framework */,
+				65DE3F69151C71F100E2240F /* AddressBookUI.framework */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,

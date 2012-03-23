@@ -10,7 +10,10 @@
 
 #import "TITokenFieldView.h"
 
-@interface TokenFieldExampleViewController : UIViewController <TITokenFieldViewDelegate, UITextViewDelegate> {
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
+
+@interface TokenFieldExampleViewController : UIViewController <TITokenFieldViewDelegate, UITextViewDelegate,ABPersonViewControllerDelegate,ABPeoplePickerNavigationControllerDelegate> {
 
 	TITokenFieldView * tokenFieldView;
 	UITextView * messageView;
