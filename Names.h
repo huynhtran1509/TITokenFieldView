@@ -11,4 +11,5 @@
 
 @interface Names : NSObject
 + (NSArray *)listOfNames;
++(NSString*)CFStringToString:(CFStringRef)ref;
 @end

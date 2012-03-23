@@ -136,7 +136,9 @@
 {
 	return YES;
 }
-
+- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicke {
+  [self dismissModalViewControllerAnimated:YES];
+}
 
 // Does not allow users to perform default actions such as dialing a phone number, when they select a person property.
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person 

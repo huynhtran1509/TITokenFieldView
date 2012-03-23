@@ -223,16 +223,22 @@ CGFloat const kSeparatorHeight = 1;
     static NSString *CellIdentifier = @"ResultsCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell) cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    if (!cell) cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
 	
-	[cell.textLabel setText:[resultsArray objectAtIndex:indexPath.row]];
+  NSDictionary *dict = [resultsArray objectAtIndex:indexPath.row];
+  
+  [cell.textLabel setText:[dict objectForKey:@"name"]];
+  [cell.detailTextLabel setText:[dict objectForKey:@"email"]];
+  
+	//[cell.textLabel setText:[resultsArray objectAtIndex:indexPath.row]];
 	
-    return cell;
+  return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	[tokenField addToken:[resultsArray objectAtIndex:indexPath.row]];
+  NSDictionary* dict = [resultsArray objectAtIndex:indexPath.row];
+	[tokenField addToken:[dict objectForKey:@"email"]];
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -395,10 +401,11 @@ CGFloat const kSeparatorHeight = 1;
 	
 	NSArray * sourceCopy = [sourceArray copy];
 	
-	for (NSString * sourceObject in sourceCopy){
+	for (NSDictionary * sourceObject in sourceCopy){
 		
-		NSString * query = [sourceObject lowercaseString];		
-		if ([query rangeOfString:typedString].location != NSNotFound){
+		NSString * query = [[sourceObject objectForKey:@"email"] lowercaseString];
+    NSString * fullname = [[sourceObject objectForKey:@"name"] lowercaseString];
+		if ([query rangeOfString:typedString].location != NSNotFound || [fullname rangeOfString:typedString].location != NSNotFound){
 			
 			if (showAlreadyTokenized){
 				if (![resultsArray containsObject:sourceObject]){
@@ -429,7 +436,7 @@ CGFloat const kSeparatorHeight = 1;
 	
 	[sourceCopy release];
 	
-	[resultsArray sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+	//[resultsArray sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 	[resultsTable reloadData];
 }
 

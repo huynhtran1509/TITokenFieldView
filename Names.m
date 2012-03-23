@@ -7,75 +7,86 @@
 //
 
 #import "Names.h"
-
+#import <AddressBook/AddressBook.h>
 
 @implementation Names
 
++(NSString*)CFStringToString:(CFStringRef)ref
+{
+  return (NSString*) ABAddressBookCopyLocalizedLabel(ref);
+}
 + (NSArray *)listOfNames {
 	
-	// Generated with http://www.kleimo.com/random/name.cfm
+    NSMutableArray *contact=[[NSMutableArray alloc]init];
+    ABAddressBookRef addressBook = ABAddressBookCreate();
+    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
+    CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
+    
+    NSLog(@"start loop");
+    for( CFIndex i = 0 ; i < nPeople ; i++ )
+    {
+        ABRecordRef ref = CFArrayGetValueAtIndex(allPeople, i );
+        ABMultiValueRef email =ABRecordCopyValue(ref, kABPersonEmailProperty);
+        CFStringRef firstname = ABRecordCopyValue(ref, kABPersonFirstNameProperty);
+        CFStringRef middlename = ABRecordCopyValue(ref, kABPersonMiddleNameProperty);
+        CFStringRef lastname = ABRecordCopyValue(ref, kABPersonLastNameProperty);
+     
+      
+      if(email) {
+        
+        NSString *emailID = nil;
+        NSString *fullname = @"";
+        
+        NSMutableArray *arr=[[NSMutableArray alloc]init];
+        for(CFIndex i=0;i<ABMultiValueGetCount(email);i++)
+        {
+          
+          
+          if (email)
+          {
+            CFStringRef emailRef = ABMultiValueCopyValueAtIndex(email, i);
+            
+            if(firstname)
+            {
+              fullname = [self CFStringToString:firstname];
+            }
+            if(middlename)
+            {
+              fullname = [NSString stringWithFormat:@"%@ %@",fullname,[self CFStringToString:middlename]];
+            }
+            if(lastname)
+            {
+              fullname = [NSString stringWithFormat:@"%@ %@",fullname,[self CFStringToString:lastname]];
+            }
+            
+            emailID = (NSString*) ABAddressBookCopyLocalizedLabel(emailRef);
+            
+            NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:fullname,@"name",emailID,@"email",nil];
+            
+            [arr addObject:dict];
+            
+            [emailID release];
+              CFRelease(emailRef);
+              
+          }
+
+        }
+        
+        [contact addObjectsFromArray:arr];
+        CFRelease(email);
+        [arr release];
+      }
+      
+
+
+    }
 	
-	return [NSArray arrayWithObjects:
-			@"Samuel Prescott",
-			@"Grace Mcburney", 
-			@"Rosemary Sells",
-			@"Janet Canady",
-			@"Gregory Leech",
-			@"Geneva Mcguinness",
-			@"Billy Shin",
-			@"Douglass Fostlick",
-			@"Roberta Pedersen",
-			@"Earl Rashid",
-			@"Matthew Hooks",
-			@"Regina Toombs",
-			@"Victor Sisneros",
-			@"Beverly Covington",
-			@"Steve Crews",
-			@"Carlos Trejo",
-			@"Victoria Delgadillo",
-			@"Leah Greenberg",
-			@"Deborah Depew",
-			@"Jeffery Khoury",
-			@"Kathryn Worsham",
-			@"Olivia Brownell",
-			@"Gary Pritchard",
-			@"Susan Cervantes",
-			@"Olvera Nipplehead",
-			@"Debra Graves",
-			@"Albert Deltoro",
-			@"Carole Flatt",
-			@"Philip Vo",
-			@"Phillip Wagstaff",
-			@"Xiao Jacquay",
-			@"Cleotilde Vondrak",
-			@"Carter Redepenning",
-			@"Kaycee Wintersmith",
-			@"Collin Tick",
-			@"Peg Yore",
-			@"Cruz Buziak",
-			@"Ardath Osle",
-			@"Frederic Manusyants",
-			@"Collin Politowski",
-			@"Hunter Wollyung",
-			@"Cruz Gurke",
-			@"Sulema Sholette",
-			@"Denver Goetter",
-			@"Chantay Phothirath",
-			@"Arlean Must",
-			@"Carlo Henggeler",
-			@"Daughrity Maichle",
-			@"Zada Wintermantel",
-			@"Denver Kubu",
-			@"Carlo Guzma",
-			@"Emory Swires",
-			@"Kirby Manas",
-			@"Tobie Spirito",
-			@"Lane Defaber",
-			@"Sparkle Mousa",
-			@"Chantay Palczynski",
-			@"Denver Perfater",
-			@"Tom Irving",
-			nil];
+  CFRelease(allPeople);
+  CFRelease(addressBook);
+
+  
+    return [contact autorelease];
+	
 }
 
 @end
